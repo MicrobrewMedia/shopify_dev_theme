@@ -1,0 +1,82 @@
+<!-- /templates/blog.liquid -->
+{% paginate blog.articles by 13 %}
+   <header class="section-header text-center">
+      <h1>
+        {% if current_tags %}
+          {{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}
+        {% else %}
+          {{ blog.title }}
+        {% endif %}
+      </h1>
+    </header>
+<div class="grid padded">
+  <div class="grid__item large--one-quarter">
+    <div class="grid__item">
+      <div class="featured-prod-item">
+        <a href="/blogs/donnas-voice/53753412-a-letter-from-the-founder">
+          <img src="{{ 'donnas-voice1.png' | asset_url }}" alt="Letter From Donna Karan" />
+        </a>
+        <a href="/blogs/donnas-voice/letter-from-the-founder">
+          <h3>CREATE, CONNECT, COLLABORATE, COMMUNICATE, CHANGE.</h3>
+          <p>This is my heart for Urban Zen. Where we can dress and address our community in mind, body and spirit.<br><br>Join me on my journeys.<br></p>
+          <img class="text-center" style="width:100px !important;" src="{{ 'signature.png' | asset_url }}" alt="Donna Karan" />
+        </a>
+        </div>
+      </div>
+  </div>
+  <div class="grid__item large--three-quarters">
+    {% for article in blog.articles %}
+    {% if article.tags contains 'hide post' %}
+    	
+    {% elsif article.tags contains 'Donnas Voice' %}
+    
+      {% assign article_content = article.excerpt_or_content %}
+      {% comment %}
+        Scrape article content and pull first image to become featured
+        assigns featured_image_src to first images src
+        assigns featured_image to image tag containing featured_image_src
+        assigns article_content to article_content without the first image
+      {% endcomment %}
+
+      {% if article_content contains '<featured' %}
+        {% assign featured_image_src = article_content | split: 'src="' %}
+        {% assign featured_image_src = featured_image_src[1] | split: '"' | first %}
+        {% capture featured_image %}
+          {% comment %}TODO: can we make sure an 'original' size is never loaded?{% endcomment %}
+          {{ featured_image_src | img_tag: article.title }}
+        {% endcapture %}
+        {% assign article_content = article_content | replace: featured_image_src, '' | replace: 'src=""',  'style="display: none;"' %}
+      {% elsif article_content contains '<img' %} 
+    {% assign featured_image_src = article_content | split: 'src="' %}
+        {% assign featured_image_src = featured_image_src[1] | split: '"' | first %}
+        {% capture featured_image %}
+          {% comment %}TODO: can we make sure an 'original' size is never loaded?{% endcomment %}
+          {{ featured_image_src | img_tag: article.title }}
+        {% endcapture %}
+        {% assign article_content = article_content | replace: featured_image_src, '' | replace: 'src=""',  'style="display: none;"' %}
+    {% else %}
+        {% assign featured_image = false %}
+      {% endif %}
+      <div class="grid__item large--one-third padded">
+        <div class="featured-prod-item">
+          {% if featured_image %}
+            {{ featured_image }}
+          {% endif %}
+           <a class="grid-product__meta" href="{{ article.url }}">
+			<span class="grid-product__title">{{article.title }}</span>
+          </a>
+        </div>
+      </div>
+	{% endif %}
+    {% endfor %}
+
+    {% if paginate.pages > 1 %}
+      <div class="pagination clearfix">
+        {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endpaginate %}

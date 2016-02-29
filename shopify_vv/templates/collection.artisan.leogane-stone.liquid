@@ -1,0 +1,115 @@
+<!-- /templates/page.liquid -->
+</div>
+<div class="artisan">
+  <div class="collection-hero">
+    <div class="collection-hero__image" style="background-image: url({{ 'Leogane-Stone-Header-Banner.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <h3 class="yellow-caps">Haiti Artisan Project</h3>	
+        <h1>{{ collection.title }}</h1>
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              {{ collection.description }}
+              <hr class="hr--clear-xs">
+              <a href="#collection" class="btn">Shop The Collection</a>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+  <hr class="hr--clear-xs">
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item large--one-third text-center">
+        <h2>The Idea</h2>
+        <img src="{{ 'Leogane-Stone-Idea-3.jpg' | asset_url }}">
+        <br><br>
+        <p>The rural region of Léogâne, Haiti is known for it's craftsmanship in stone. A community of over two dozen families (about 200 people) carve and decorate the stone. While the carving is predominately done by men, women are involved in other steps in the process like smoothing and polishing the carved stone.</p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Craft</h2>
+        <img src="{{ 'Leogane-Stone-Craft-1.jpg' | asset_url }}">
+        <br><br>
+        <p>Stone carvers use simple hand tools to transform large stone blocks into delicate pieces. The stone comes from mountains and riverbeds in Haiti where it is abundant. </p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Impact</h2>
+        <img src="{{ 'Leogane-Stone-Impact-1.jpg' | asset_url }}">
+        <br><br>
+        <p>In the devastating earthquake of 2010, over 90% of Léogâne’s homes and buildings were destroyed. Overcoming devastation, these artisans and their families are using their hearts and hands to start the long process of rebuilding their community and country.</p>
+      </div>
+        <hr class="hr--clear-xs">
+      <div class="grid__item text-center">
+        <h2>SHOP THE CURRENT Leogane Stone COLLECTION AT OUR STORES</h2>
+        <h3><strong>NYC</strong> 1.212.206.3999 | <strong>SAG HARBOR</strong> 1.212.206.3999 | <strong>ASPEN</strong> 1.970.710.2961</h3>
+        <hr class="hr--clear">
+      </div>
+    </div>
+  </div>
+    <div>
+    <img style="width:100%;" src="{{ 'Horn_Product-Grid.jpg' | asset_url }}"/>
+  </div>
+  <div class="wrapper" id="collection">
+  {% include 'artisan-collection-template' %}
+  </div>
+<div class="collection-hero quote">
+    <div class="collection-hero__image" style="background-image: url({{ 'Leogane-Stone-Quote-Banner.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+                <hr class="hr--clear">
+              <p>“The people and their work is breathtaking. Raw, simple and expressive. Everyone there is eager to learn and help any way they can. We give them an inspiration and, minutes later, they come back to us with just-carved samples, each better then the next.”</p>
+              <hr class="hr--clear-xs">
+             <h4 class="caption"> – DONNA KARAN</h4>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+	<header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              <h2>ONE ARTISAN AT A TIME</h2>
+              <h5>The Mission of {{collection.title}}</h5>
+              <p>Urban Zen aims to help develop, market and present the work of Haiti artisans to the western world. As an ambassador to the preservation of Haiti’s artistry and expression, Donna Karan and a community of supporters have been traveling to Haiti at every opportunity, working one-on-one with the artists and manufacturers. “The artistry and skill is breathtaking,” Donna says. “I am so inspired by what I am seeing and the people with whom I’m working with. I couldn’t be more excited.”</p>
+               <hr class="hr--clear-xs">
+
+              <h5>Join our Community: <span class="lowercase">#UZArtisans</span></h5>
+              <ul class="inline-list no-bullets social-icons">
+                  
+                    <li>
+                      <a href="https://www.facebook.com/UrbanZen" title="Urban Zen on Facebook">
+                        <span class="icon icon-facebook" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://twitter.com/urban_zen" title="Urban Zen on Twitter">
+                        <span class="icon icon-twitter" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://www.pinterest.com/urbanzenpins/" title="Urban Zen on Pinterest">
+                        <span class="icon icon-pinterest" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://instagram.com/urbanzen/" title="Urban Zen on Instagram">
+                        <span class="icon icon-instagram" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </header> 
+    </div>

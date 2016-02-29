@@ -1,0 +1,115 @@
+<!-- /templates/page.liquid -->
+</div>
+<div class="artisan">
+  <div class="collection-hero">
+    <div class="collection-hero__image" style="background-image: url({{ 'Einstein-Banner-Image1.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <h3 class="yellow-caps">Haiti Artisan Project</h3>	
+        <h1>{{ collection.title }}</h1>
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              {{ collection.description }}
+              <hr class="hr--clear-xs">
+              <a href="#collection" class="btn">Shop The Collection</a>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+  <hr class="hr--clear-xs">
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item large--one-third text-center">
+        <h2>The Idea</h2>
+        <img src="{{ 'IMG_9963rt-for-web.02.jpg' | asset_url }}">
+        <br><br>
+        <p>Einstein’s parents came to Haiti from Jamaica in the 1940’s and founded the woodworking business, developing their own tree plantations of Obechee tree as word spread of the quality and craftsmanship of their product and demand increased. They now have multiple tree plantations from which they draw their wood.</p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Craft</h2>
+        <img src="{{ 'Einstein-Craft-1.jpg' | asset_url }}">
+        <br><br>
+        <p>Every Einstein Wood product is handcrafted. It begins as a shape and a form, and every product has unique variations, lending to its inherent beauty. Each item is inspected, cleaned with putty, and then coated with up to 10 layers of lacquer to give the naturally lightwood a rich, dark, chocolate finish. All of Einstein Albert bowls are hand made by Einstein Albert, one of the premiers wood craftsmen of Haiti.</p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Impact</h2>
+        <img src="{{ 'Einstein-Impact-1.jpg' | asset_url }}">
+        <br><br>
+        <p>Einstein Albert’s workshop is located in Mariani, the eastern edge of Port-au-Prince, where he employs several apprentices. The woodworking center averages 40 employees although, at their busiest times, they employ as many as 80. 60% of their work force is women. The women are primarily responsible for the sanding. The men are engaged in aspects of production requiring heavier labor.</p>
+      </div>
+        <hr class="hr--clear-xs">
+      <div class="grid__item text-center">
+        <h2>SHOP THE CURRENT EINSTEIN WOOD COLLECTION AT OUR STORES</h2>
+        <h3><strong>NYC</strong> 1.212.206.3999 | <strong>SAG HARBOR</strong> 1.212.206.3999 | <strong>ASPEN</strong> 1.970.710.2961</h3>
+        <hr class="hr--clear">
+      </div>
+    </div>
+  </div>
+    <div>
+    <img style="width:100%;" src="{{ 'Einstein_Product-Grid.jpg' | asset_url }}"/>
+  </div>
+  <div class="wrapper" id="collection">
+  {% include 'artisan-collection-template' %}
+  </div>
+<div class="collection-hero quote">
+    <div class="collection-hero__image" style="background-image: url({{ 'Einstein-Quote-Banner.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+                <hr class="hr--clear">
+              <p>“Haiti brings out every emotion you have – despair, compassion, love and hope – as well as the excitement of what’s possible with some heartfelt connection and creative collaboration. You must admire these people.”</p>
+              <hr class="hr--clear-xs">
+             <h4 class="caption"> – DONNA KARAN</h4>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+	<header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              <h2>ONE ARTISAN AT A TIME</h2>
+              <h5>The Mission of {{collection.title}}</h5>
+              <p>Urban Zen aims to help develop, market and present the work of Haiti artisans to the western world. As an ambassador to the preservation of Haiti’s artistry and expression, Donna Karan and a community of supporters have been traveling to Haiti at every opportunity, working one-on-one with the artists and manufacturers. “The artistry and skill is breathtaking,” Donna says. “I am so inspired by what I am seeing and the people with whom I’m working with. I couldn’t be more excited.”</p>
+               <hr class="hr--clear-xs">
+
+              <h5>Join our Community: <span class="lowercase">#UZArtisans</span></h5>
+              <ul class="inline-list no-bullets social-icons">
+                  
+                    <li>
+                      <a href="https://www.facebook.com/UrbanZen" title="Urban Zen on Facebook">
+                        <span class="icon icon-facebook" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://twitter.com/urban_zen" title="Urban Zen on Twitter">
+                        <span class="icon icon-twitter" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://www.pinterest.com/urbanzenpins/" title="Urban Zen on Pinterest">
+                        <span class="icon icon-pinterest" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://instagram.com/urbanzen/" title="Urban Zen on Instagram">
+                        <span class="icon icon-instagram" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </header> 
+    </div>

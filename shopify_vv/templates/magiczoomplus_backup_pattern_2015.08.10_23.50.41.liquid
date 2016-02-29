@@ -1,0 +1,17 @@
+{% comment %}
+          Display current variant image, or default first
+        {% endcomment %}
+        <div class="product-single__photo-wrapper">
+          <img class="product-single__photo" id="ProductPhotoImg" src="{{ featured_image | img_url: 'master' }}" {% if settings.product_zoom_enable %}data-mfp-src="{{ featured_image | img_url: '1024x1024' }}"{% endif %} alt="{{ featured_image.alt | escape }}" data-image-id="{{ featured_image.id }}">
+        </div>
+
+        {% comment %}
+          Display rest of product images, not repeating the featured one
+        {% endcomment %}
+        {% for image in product.images %}
+          {% unless image contains featured_image %}
+            <div class="product-single__photo-wrapper">
+              <img class="product-single__photo" src="{{ image.src | img_url: 'master' }}" {% if settings.product_zoom_enable %}data-mfp-src="{{ image.src | img_url: '1024x1024' }}"{% endif %} alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}">
+            </div>
+          {% endunless %}
+        {% endfor %}

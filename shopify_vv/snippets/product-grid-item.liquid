@@ -1,0 +1,88 @@
+<!-- /snippets/product-grid-item.liquid -->
+{% comment %}
+
+  This snippet is used to showcase each product during the loop,
+  'for product in collection.products' in collection.liquid.
+
+  A liquid variable (grid_item_width) is set just before the this
+  snippet is included to change the size of the container.
+  Once the variable is set on a page, all future instances of this
+  snippet will use that width. Overwrite the variable to adjust this.
+
+  Example
+    - assign grid_item_width = 'large--one-quarter medium--one-half'
+
+{% endcomment %}
+
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-third medium--one-half' %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+{% unless product.tags contains 'Lifestyle' or product.tags contains 'Furniture-collection' %}
+
+  <div class="grid-product__wrapper">
+    <div class="grid-product__image-wrapper">
+      <a class="grid-product__image-link" href="{{ product.url | within: collection }}">
+        <img class="primary-img" src="{{ product.images[0] | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" class="grid-product__image">
+        {% if product.images[1] %}
+        	<img class="secondary-img" src="{{ product.images[1] | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" class="grid-product__image" >
+        {% else %}
+        	<img class="secondary-img" src="{{ product.images[0] | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" class="grid-product__image" >
+     	{% endif %}
+      </a>
+      {% if on_sale %}
+        <div class="grid-product__on-sale">
+          {% capture saved_amount %}{{ product.compare_at_price | minus: product.price | money }}{% endcapture %}
+          <p>{{ 'products.general.save_html' | t: saved_amount: saved_amount }}</p>
+        </div>
+      {% endif %}
+    </div>
+    <a href="{{ product.url | within: collection }}" class="grid-product__meta">
+      <span class="grid-product__title">{{ product.title }}</span>
+      <span class="grid-product__price-wrap">
+		{% comment %}
+          {% if product.price_varies %}
+            {{ product.price_min | money_without_trailing_zeros }}
+
+          {% else %}
+            {{ product.price | money_without_trailing_zeros }}
+          {% endif %}
+
+      {% if settings.product_vendor_enable %}
+        <p class="grid-product__vendor">{{ product.vendor }}</p>
+      {% endif %}
+        {% endcomment %}
+      </span>
+    </a>
+    
+</div>
+{% endunless %}
+{% if product.tags contains 'Lifestyle' %}
+  <div class="grid-product__wrapper">
+    <div class="grid-product__image-wrapper lifestyle-desc">
+      {% unless product.tags contains 'No Text' %} <h2><span>{{ product.description }}</span></h2> {% endunless %}
+        <img src="{{ product.images[0] | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}">
+    </div>
+  </div>
+{% endif %}
+        {% if product.tags contains 'Furniture-collection' %}
+  <div class="grid-product__wrapper">
+    <div class="grid-product__image-wrapper furniture lifestyle-desc">
+      <a class="grid-product__image-link" href="/pages/lookbook-furniture/">
+        <img src="{{ product.images[0] | img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}">
+      </a>
+       <a href="/pages/lookbook-furniture/" class="grid-product__meta">
+        <span class="grid-product__title">{{ product.title }}</span>
+    </a>
+    </div>
+  </div>
+{% endif %}  

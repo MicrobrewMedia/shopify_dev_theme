@@ -1,0 +1,194 @@
+{% comment %}
+  Collection template, used on collection.liquid and collection.image.liquid
+{% endcomment %}
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-third medium--one-half' %}
+{% endunless %}
+{% paginate collection.products by 12 %}
+
+<header class="section-header sidebar">
+  <h1>{{ collection.title }}</h1>
+  {% if collection.description != blank %}
+    <div class="grid">
+      <div class="grid__item">
+        <div class="rte">
+          {{ collection.description }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% assign tag = current_tags.first | split: '-' %}
+ 
+  <div class="mobile-left-dropdown" id="left-dropdown-button">{% if current_tags %} {% for word in tag %}{{ word | capitalize }} {% endfor %} {% else %}All{% endif %}<span class="icon icon-arrow-down dropdown-hidden"></span></div>  
+  <ul class="left-nav">
+  {% for link in linklists.main-menu.links %}
+  {% assign child_list_handle = link.title | handleize %}
+  {% if linklists[child_list_handle].links != blank %}
+  {% if link.title == collection.title %}
+
+  <li>
+    <a id="collection-all" {% unless current_tags %} class="hide-mobile" {% endunless %} href="{{ link.url }}">
+      All
+    </a>
+
+    <ul class="left-nav-submenu">
+      {% for child_link in linklists[child_list_handle].links %}
+      {% assign grand_child_list_handle = child_link.title | handle %}
+      {% if linklists[grand_child_list_handle] and linklists[grand_child_list_handle].links.size > 0 %}
+      <li class="grand">
+
+        <a href="{{ child_link.url }}" class="{% if child_link.active %}site-nav--active{% endif %}">
+          {{ child_link.title }}
+        </a>
+        <ul>
+          {% for grand_child_link in linklists[grand_child_list_handle].links %}
+          <li>
+            <a href="{{ grand_child_link.url }}" class="{% if grand_child_link.active %}site-nav--active{% endif %}">{{ grand_child_link.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% else %}
+      <li>
+        <a href="{{ child_link.url }}" class="{% if child_link.active %}site-nav--active{% endif %} ">
+          {{ child_link.title }}
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </li>
+   {% endif %}
+  {% else %}
+    {% unless link.title == 'Ready-To-Wear' %}
+      <li {% if link.active %}class="site-nav--active"{% endif %}>
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      </li>
+  	{% endunless %}
+  {% endif %}
+  {% endfor %}
+
+  {% if shop.customer_accounts_enabled %}
+  {% if customer %}
+  <li class="customer-navlink large--hide"><a href="/account">View Account</a></li>
+  <li class="customer-navlink large--hide">{{ 'Log out' | customer_logout_link }}</li>
+  {% else %}
+  <li class="customer-navlink large--hide">{{ 'Sign in' | customer_login_link }}</li>
+  {% if shop.customer_accounts_optional %}
+  <li class="customer-navlink large--hide">{{ 'Create an Account' | customer_register_link }}</li>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+</ul>
+  {% if collection.tags contains 'Haiti Artisan Project' %}
+  <div class="giving-back">
+  <strong>GIVING BACK</strong><br>
+  <p>When you shop the Haiti Artisan Project, 10% of net proceeds support our foundation's efforts in Haiti.</p>
+  </div>
+{% endif %}
+</header>
+
+{% if settings.collection_products_grid == 'collage' %}
+  <div class="grid grid-collage">
+    {% comment %}
+      Loop through our products in the current collection.
+      See the snippet 'snippets/product-grid-collage.liquid'.
+
+      `is_reverse_row__product`, `three_row_index__product`, `collection_product_count`, and `divisible_by_three__product` are
+      all used by 'snippets/product-grid-collage.liquid'
+    {% endcomment %}
+    {% assign is_reverse_row__product = false %}
+    {% assign three_row_index__product = 0 %}
+    {% assign collection_product_count__product = collection.products_count %}
+    {% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
+    {% for product in collection.products %}
+    <div class="product collection-img grid__item grid-product {{ grid_item_width }}{% if sold_out %} is-sold-out{% endif %}" id="product-{{ forloop.index | plus:paginate.current_offset }}">
+      {% include 'product-grid-collage' %}
+    </div>
+    {% else %}
+
+      {% if collection.handle == 'all' %}
+
+        {% comment %}
+          Add default products to help with onboarding for collections/all only
+        {% endcomment %}
+        {% unless emptyState %}
+          {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+          {% assign emptyState = true %}
+        {% endunless %}
+
+        {% include 'onboarding-empty-collection' %}
+
+      {% else %}
+
+        {% comment %}
+          If collection exists but is empty, display message
+        {% endcomment %}
+        <div class="grid__item text-center">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+
+      {% endif %}
+
+    {% endfor %}
+
+  </div>
+{% elsif settings.collection_products_grid == 'grid' %}
+  <div class="grid-uniform">
+    {% assign grid_item_width = 'medium--one-half large--one-third' %}
+    {% for product in collection.products %}
+    <div class="product collection-img grid__item grid-product {{ grid_item_width }}{% if sold_out %} is-sold-out{% endif %}" id="product-{{ forloop.index | plus:paginate.current_offset }}">
+      {% include 'product-grid-item' %}
+    </div>
+    {% else %}
+      {% if collection.handle == 'all' %}
+        {% comment %}
+          Add default products to help with onboarding for collections/all only
+        {% endcomment %}
+        {% unless emptyState %}
+          {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+          {% assign emptyState = true %}
+        {% endunless %}
+
+        {% include 'onboarding-empty-collection' %}
+
+      {% else %}
+
+        {% comment %}
+          If collection exists but is empty, display message
+        {% endcomment %}
+        <div class="grid__item text-center">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+
+      {% endif %}
+    {% endfor %}
+  
+{% if paginate.next %}
+  <div class="product" id="more"><p>&darr; <a href="{{ paginate.next.url }}">More</a></p></div>
+{% endif %}
+<div id="product-list-foot"></div>
+    </div>
+{% endif %}
+
+
+
+
+{% endpaginate %}
+
+<script>
+  jQuery(function($) {
+    
+    $('#left-dropdown-button').click(function() {
+      if($(this).children('span').hasClass('dropdown-hidden')) {
+        $(this).children('span').removeClass('dropdown-hidden');
+        $('.left-nav').show(200);
+      } else {
+        $(this).children('span').addClass('dropdown-hidden');
+        $('.left-nav').hide(200);
+      }
+      
+    });
+    
+  });
+</script>

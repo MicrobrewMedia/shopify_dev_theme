@@ -1,0 +1,76 @@
+<!-- /templates/page.liquid -->
+<div class="grid padded">
+  <div class="large--five-sixths push--large--one-twelfth">
+    <header class="section-header text-center">
+      <h3 class="yellow-caps">Haiti Artisan Project</h3>
+      <h1 class="yellow-caps">Meet The Haiti Artisans</h1>
+      <p>“Where there is creativity, there is hope. And Haiti is the most hopeful place I’ve experienced.”</p>
+      <p>– Donna Karan</p>
+    </header>
+    <div class="grid haiti-artisans">
+      <div class="grid__item large--one-third text-center">
+      	<div class="featured-prod-item">
+            <a href="https://vimeo.com/29276643" class="fancybox-media">
+				<img src="{{ 'Naturally-Haiti.jpg' | asset_url }}" alt="Naturally Haiti" />
+            </a>
+        </div>
+      </div>
+     {% for link in linklists.haiti-artisans.links %}
+     {% if link.type == 'collection_link' %}
+         {% assign linkCollection = link.object %}
+      <div class="grid__item large--one-third text-center">
+        <div class="featured-prod-item">
+                {% if linkCollection.image %}
+                    <img src="{{ linkCollection.image.src | collection_img_url: 'large' }}" alt="{{ linkCollection.title | escape  }}" />
+                {% endif %}
+          <a class="grid-product__meta" href="{{ link.url }}">
+			<span class="grid-product__title">{{link.title }}</span>
+          </a>
+        </div>
+      </div>
+    {% endif %}
+{% endfor %}
+    </div>
+    <hr class="hr--small">
+	<div class="row">
+    	<div class="grid__item large--one-half">
+      <img src="{{ 'img1_haiti-960x650.jpg' | asset_url }}" alt="Donna Karan" />
+    </div>
+    	<div class="grid__item large--one-half">
+    	<h1 class="yellow-caps">HAITI ARTISAN PROJECT</h1>
+		<p>Donna Karan was first introduced to Haiti by her inspiration, President Bill Clinton, and the Clinton Global Initiative. Instead of seeing the country’s devastation following the earthquake, Donna saw Haiti’s potential through the eyes of creativity and the spirit of its people. She immediately galvanized the design community and fashion world as part of her commitment to tell Haiti’s story through a new lens.</p>
+    </div>
+    </div>
+        <hr class="hr--small">
+
+    <div class="row">
+   		<div class="grid__item large--one-half">
+          <h1 class="yellow-caps">OUR MISSION IN HAITI</h1>
+          <p>The Haiti Artisan project, founded by Donna Karan, promotes economic development through job creation and vocational education, helps raise awareness and highlights the creativity of Haiti’s artisans.
+ 			<br>
+        	<i>10% of net proceeds from the Haiti Artisan Project support our foundation’s efforts in Haiti.</i></p><br>
+      		<h1 class="yellow-caps">NATURALLY HAITI</h1>
+      		<p>“The artistry and skill [in Haiti] is breathtaking. I am so inspired by what I am seeing and the people with whom I’m working with. I couldn’t be more excited.”<br>– DONNA KARAN</p>	
+    	</div>
+    	<div class="grid__item large--one-half">
+       		<img src="{{ 'page3_rightcolumn_img.jpg' | asset_url }}" alt="Our Mission" />	
+    	</div>
+    </div>
+        <hr class="hr--small">
+
+    <div class="row">
+    	<div class="grid__item large--one-half">
+      <img src="{{ 'page5_rightgrid_img.jpg' | asset_url }}" alt="Our Impact" />
+    </div>
+    	<div class="grid__item large--one-half">
+    	<h1 class="yellow-caps">OUR IMPACT</h1>
+		<p>The outcome of Urban Zen’s commitment to Haiti has raised massive awareness, created jobs, provided vocational education, and inspired others in the creative community to join the platform and bring even more opportunity to the developing world.</p>
+      	<br>
+      <h1 class="yellow-caps">GRANTS GIVEN</h1>
+      <p>The DOT – Artisan Training Center, a collaboration between Urban Zen, Parsons The New School for Design and Paula Coles | Cine Institute | ENARTS Fine Arts School | Creation of the Urban Zen Art Center at La | Reference Village/PRODE | Paula Coles’ LIFE Vocational Training | Center in Port–Au–Prince | Development of new workspaces for Tobacco Leaf Artisans in Jacmel</p>
+		<br>
+      <a href="http://urbanzen.org/donate/" class="btn outline yellow">Donate</a>
+    </div>
+    </div>
+  </div>
+</div>

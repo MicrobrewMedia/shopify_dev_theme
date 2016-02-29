@@ -1,0 +1,455 @@
+<!-- /templates/product.liquid -->
+</div>
+{% if product.tags contains 'Lifestyle' %}
+ {% include '404' %}
+{% else %}
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' %}
+<nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+  <a href="https://www.urbanzen.com" title="Home">Home</a>
+  {% if template contains 'page' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ page.title }}</span>
+  {% elsif template contains 'product' %}
+    {% if collection.url %}
+      <span aria-hidden="true">&rsaquo;</span>
+      {{ collection.title | link_to: collection.url }}
+    {% endif %}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ product.title }}</span>
+  {% elsif template contains 'collection' and collection.handle %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% if current_tags %}
+      {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+      {{ collection.title | link_to: url }}
+      <span aria-hidden="true">&rsaquo;</span>
+      <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+      <span>{{ collection.title }}</span>
+    {% endif %}
+  {% elsif template == 'blog' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% if current_tags %}
+      {{ blog.title | link_to: blog.url }}
+      <span aria-hidden="true">&rsaquo;</span>
+      <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+    <span>{{ blog.title }}</span>
+    {% endif %}
+  {% elsif template == 'article' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {{ blog.title | link_to: blog.url }}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ article.title }}</span>
+  {% else %}
+   <span aria-hidden="true">&rsaquo;</span>
+   <span>{{ page_title }}</span>
+  {% endif %}
+</nav>
+{% endunless %}
+<div class="wrapper">
+<div itemscope itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {% assign mobile_images = product.images %}
+  <div class="grid product-single">
+    <div class="grid__item large--seven-twelfths medium--twelve-twelfths text-center">
+      <div class="product-single__photos {% if product.tags contains 'Set' %} remove-toolbox-padding{% endif %}" id="magiczoom">
+        {% assign featured_image = product.selected_variant.featured_image | default: product.featured_image %}
+
+        <!-- START MAGICZOOMPLUS IMAGES -->{% include 'magiczoomplus' %}<!-- END MAGICZOOMPLUS IMAGES -->
+      </div>
+    </div>
+
+    <div class="grid__item product-single__meta--wrapper medium--twelve-twelfths large--five-twelfths">
+      <div class="product-single__meta {% if product.tags contains 'Set' %} set-product{% endif %}">
+        {% if settings.product_vendor_enable %}
+          <h2 class="product-single__vendor" itemprop="brand">{{ product.vendor }}</h2>
+        {% endif %}
+		{% unless product.tags contains 'Set' %}
+        <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
+		{% endunless %}
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          {% comment %}
+            Optionally show the 'compare at' or original price of the product.
+          {% endcomment %}
+          
+          
+		  {% unless product.tags contains 'Set' %}
+          	{% if product.compare_at_price > product.price %}
+          	
+            <span class="product-single__price--wrapper">
+              <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+              <span id="ComparePrice" class="product-single__price--compare-at">
+                {{ product.compare_at_price | money }}
+              </span>
+              <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+            </span>
+          	
+          {% endif %}
+
+          <span id="ProductPrice" class="product-single__price{% if product.compare_at_price > product.price %} on-sale{% endif %}" itemprop="price">
+            {{ current_variant.price | money }}
+          </span>
+          {% endunless %}
+ <div class="product-single__description text-center" itemprop="description">
+          {{ product.description }}
+        </div>
+          <hr class="hr--xs-small">
+
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+			{% unless product.tags contains 'Set' %}
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-single__form" id="AddToCartForm">
+            <select name="id" id="ProductSelect" class="product-single__variants">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+
+ 			{% comment %}
+            <div class="product-single__quantity">
+              <label for="Quantity" class="product-single__quantity-label js-quantity-selector">{{ 'products.product.quantity' | t }}</label>
+              <input type="number" hidden="hidden" id="Quantity" name="quantity" value="1" min="1" class="js-quantity-selector">
+            </div>
+			{% endcomment %}
+			{% if product.tags contains 'Call To Purchase' %}
+            <div id="call-to-purchase">
+              Call to order: (855) 755-4848
+            {% else %}
+            <div id="variant-inventory">
+              <label>Select Quantity</label>
+              <select id="Quantity" name="quantity">
+              </select>
+            </div>
+
+            <div class="product-single__add-to-cart">
+              <button type="submit" name="add" id="AddToCart" class="btn">
+                <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+              </button>
+            </div>
+            {% endif %}
+          </form>
+			{% endunless %}
+        </div>
+
+       
+
+        {% if settings.social_sharing_products %}
+          {% include 'social-sharing' %}
+        {% endif %}
+        <div class="tab-container"></div>
+      
+        <div class="accordion-container">
+          <div class="acc-category" id="accordion-0"></div>
+          <div class="acc-content" id="accordion-0-content"></div>
+          <div class="acc-category" id="accordion-1"></div>
+          <div class="acc-content" id="accordion-1-content"></div>
+          <div class="acc-category" id="accordion-2"></div>
+          <div class="acc-content" id="accordion-2-content"></div>          
+        </div>
+           
+      </div>
+
+      </div>
+  </div>
+
+  {% if collection %}
+    <hr class="hr--clear">
+   <!-- <div class="text-center">
+      <a href="{{ collection.url }}" class="return-link">&larr; {{ 'products.general.collection_return' | t: collection: collection.title }}</a>
+    </div>-->
+  {% endif %}
+
+</div>
+
+{% comment %}
+
+  *IMPORTANT:*
+  This theme uses a customized version of `option_selection.js` to support using radio inputs for
+  color and size variants. The custom version is in `variant_selection.js`.
+
+  If you wish to enable the default dropdowns for size and color
+  you can change the liquid asset tag below from:
+
+  {{ 'variant_selection.js' | asset_url | script_tag }}
+
+  to
+
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+  If you use the default `option_selection.js` the labels for the dropdowns will
+  appear outside the dropdown.
+
+  You will also need to change `.radio-wrapper` to `.selector-wrapper` below.
+
+{% endcomment %}
+{{ 'variant_selection.js' | asset_url | script_tag }}
+{% endif %}
+<script>
+
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector
+    });
+
+	var variantCategories = $('#AddToCartForm').find('fieldset[name!="Title"]');
+    variantCategories.each(function(index, value) {
+      
+      $(this).parent().addClass('show-important');
+      
+    });
+    if (variant) {
+      
+      if (variant.inventory_management == "shopify" && variant.inventory_policy != "continue") {
+        if (variant.inventory_quantity > 0) {
+          $('#variant-inventory').text("");
+          $('.product-single__add-to-cart').show();
+          $('#Quantity').empty();
+          for(i = 0; i <= variant.inventory_quantity; i++) {
+            $('#Quantity').append('<option value="'+i+'">'+i+'</option>');
+          }
+        } else {
+
+      	  var findSelectedVariant = $('#AddToCartForm').find('input[name!="Size"]');
+          $(findSelectedVariant).each(function(index, value) {
+
+            if(variant.title.indexOf(value.value) > -1) {
+              var thisId = value.id.replace(/ /g, '-');
+              $('label#'+thisId).addClass('selected-color');
+              var color = value.value.replace(' ', '-');
+              $('.MagicToolboxSelectorsContainer').children('div').hide();
+              $('.MagicToolboxSelectorsContainer').children('div').each(function() {
+                if($(this).hasClass('thumb-' + color)) {
+                  $(this).show();
+                }
+              });  
+              
+            }
+            
+          });          
+          $('.product-single__add-to-cart').hide();
+          $('#variant-inventory').html("<h3>Available in-store </h3><p>Inquire:<br/> <a href='tel:18557554848'>1.855.755.4848</a><br/><a href='mailto:customerservice@urbanzen.com'>customerservice@urbanzen.com</a></p>");
+        }
+      } else {
+      //  $('#variant-inventory').text("This product is available");
+      }
+    } else {
+      	  var sizeOptions = $('#AddToCartForm').find('input[name="Size"]');
+          $(sizeOptions).each(function(index, value) {
+            if(index === 0) {
+              $(this).prop('checked', true);
+            }
+          });
+		  $('.product-single__add-to-cart').hide();
+          $('#variant-inventory').html("<h3>Available in-store </h3><p>Inquire:<br/> <a href='tel:18557554848'>1.855.755.4848</a><br/><a href='mailto:customerservice@urbanzen.com'>customerservice@urbanzen.com</a></p>");
+    }
+
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('ProductSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.radio-wrapper:eq(0)').prepend('<label for="ProductSelect-option-0" class="single-option-radio__label">{{ product.options.first | escape }}</label>');
+    {% endif %}
+  });
+
+    jQuery(function($) {
+		
+      $('#AddToCartForm').find('*').removeClass('disabled').removeAttr('disabled');
+
+      $('#AddToCartForm fieldset label').each(function() {
+        var title = $(this).html();
+        $(this).addClass('tooltip');
+        $(this).attr('title', title);
+        var labelFor = $(this).attr('for');
+        labelFor = labelFor.replace(/\//g, '-').replace(/ /g, '-');
+        $(this).attr('id', labelFor);
+      });    
+      $('.tooltip').tooltipster({
+          animation: 'fade',
+          delay: 200,
+          theme: 'tooltipster-default',
+          trigger: 'hover',
+          position: 'bottom'
+      });
+      $('.product-single__description h6').each(function(index, value) {
+        var category = $(this).html();
+        $('#accordion-' + index).html(category + '<span class="icon icon-arrow-down" id="open-'+index+'"></span>');
+        $(this).nextUntil('h6').clone().appendTo('#accordion-'+index+'-content');
+      });
+      
+      $('.acc-category').each(function(index) {
+      
+        $(this).click(function() {
+          if($(this).hasClass('acc-active')) {
+             $('#' + this.id + '-content').slideUp(200);
+             $(this).removeClass('acc-active');
+             $(this).children('span').removeClass('acc-arrow-active');
+          } else {
+            $('.acc-content').hide(200);
+            $('.acc-category').removeClass('acc-active');
+            $('.acc-category').children('span').removeClass('acc-arrow-active');
+            $('#' + this.id + '-content').slideToggle(200);
+            $(this).toggleClass('acc-active');
+            $(this).children('span').toggleClass('acc-arrow-active');
+          }
+        });
+        
+      });
+      
+      $('.product-single__description h6:first-of-type').before('<ul class="info-tabs">');
+      $('.product-single__description h6').each(function(index, value) {
+        var num = index + 1;
+        $(this).nextUntil('h6').wrapAll('<div class="info-tab-content" id="tab' + num + '">');
+        $(this).wrap('<li class="single-tab"><a href="#tab' + num + '"></a></li>');
+      });
+      $('ul.info-tabs, .info-tab-content').appendTo('.tab-container');
+      $('.single-tab').each(function() {
+        $(this).appendTo('ul.info-tabs');
+      });
+      
+      
+      
+      // tab functionality  
+      $('ul.info-tabs').each(function() {
+        var $active, $content, $links = $(this).find('a');        
+        $active = $($links.filter('[href="'+location.hash+'"]')[0] || $links[0]);
+        $active.addClass('active');
+        $active.parent().addClass('active-li');
+        $content = $($active.attr('href'));
+        
+        $links.not($active).each(function() {
+          $($(this).attr('href')).hide();
+        });
+        
+        $(this).on('click', 'a', function(e) {
+          $active.removeClass('active');
+          $active.parent().removeClass('active-li');
+          $content.hide();
+          
+          $active = $(this);
+          $content = $($(this).attr('href'));
+          
+          $active.addClass('active');
+          $active.parent().addClass('active-li');
+          $content.show();
+          
+          e.preventDefault();
+        });
+      });
+      
+      $('.single-option-radio input').each(function() {
+
+        {% if product.tags contains 'size-only' %}
+           $(this).click(function() {
+           var optionName = $(this).val();
+              optionName = optionName.replace(' ', '-');  
+              $('.MagicToolboxSelectorsContainer').children('div').hide();
+              var count = 0;
+              $('.MagicToolboxSelectorsContainer').children('div').each(function() {
+                if($(this).hasClass('thumb-' + optionName)) {
+                  $(this).show();
+                }
+              });
+           });
+        {% else %}
+          $(this).click(function() {
+            if(this.name !== 'Size') {
+              $('.selected-color').removeClass('selected-color');
+              var thisId = $(this).attr('id');
+              thisId = thisId.replace(/\//g, '-').replace(/ /g, '-');
+              $('label#' + thisId).addClass('selected-color');
+              var optionName = $(this).val();
+              optionName = optionName.replace(' ', '-');  
+              $('.MagicToolboxSelectorsContainer').children('div').hide();
+              var count = 0;
+              $('.MagicToolboxSelectorsContainer').children('div').each(function() {
+                if($(this).hasClass('thumb-' + optionName)) {
+                  $(this).show();
+                  count++;
+                  if(count === 1) {
+                    {% if product.tags contains 'manual-replace' %}
+                    $('.MagicZoomPlus img').fadeOut(0);
+                    var newImg = $(this).children('a').attr('rev');
+                    $('.MagicZoomPlus img').attr('src', newImg);
+                    $('.MagicZoomPlus img').fadeIn(500);
+                    {% endif %}
+                  }
+                }
+              });
+            }
+
+          });
+        {% endif %}
+
+      });  
+      
+	  var optionLength = $('.single-option-radio').children('input[name!="Size"]').length;      
+      
+      if(window.location.href.indexOf('variant') === -1) {
+            
+            
+            if(optionLength > 1) {
+              var firstOptionArray = $('.single-option-radio').children('input[name!="Size"]');
+              var firstOption = (firstOptionArray[0].value).replace(' ', '-');
+              $('.MagicToolboxSelectorsContainer').children('div').hide();
+              $('.MagicToolboxSelectorsContainer').children('div').each(function() {
+                if($(this).hasClass('thumb-' + firstOption)) {
+                  $(this).show();
+                }
+              });
+            } else {
+              if($('.MagicToolboxSelectorsContainer').length === 0) {
+                $('#magiczoom').addClass('remove-toolbox-padding');
+              }
+            }
+ 
+      } else {
+        
+            if(optionLength > 1) {
+           
+              var selectedVariant = $('.single-option-radio').children('input[name!="Size"]:checked');
+              if(selectedVariant.length > 0) {
+                var selectedVariantID = selectedVariant.attr('id');
+                var selectedValue = selectedVariant.val().replace(' ', '-');
+                $('.MagicToolboxSelectorsContainer').children('div').hide();
+                $('.MagicToolboxSelectorsContainer').children('div').each(function() {
+                  if($(this).hasClass('thumb-' + selectedValue)) {
+                    $(this).show();
+                  }
+                });              
+                $('label#'+selectedVariantID).addClass('selected-color');
+              }
+            } else {
+              if($('.MagicToolboxSelectorsContainer').length === 0) {
+                $('#magiczoom').addClass('remove-toolbox-padding');
+              }
+            }        
+      }
+
+    });
+</script>
+
+    {% if product.tags contains 'hide-related' %}
+	{% else %}
+  
+  	{% include 'related-products' %}
+
+{% endif %}

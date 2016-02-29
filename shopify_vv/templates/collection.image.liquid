@@ -1,0 +1,109 @@
+<!-- /templates/collection.image.liquid -->
+
+{% comment %}
+  If a collection image exists:
+  Close wrapper, insert featured image, then open it back up
+{% endcomment %}
+</div>
+
+{% if collection.image and current_tags == nil %}
+
+  <div class="collection-hero">
+    <div class="collection-hero__image" style="background-image: url({{ collection.image | collection_img_url: 'master' }});"></div>
+  </div>
+{% endif %}
+{% if current_tags %}
+    {% if current_tags contains 'Jackets' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'jackets-banner.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Tops' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'Tops_Banner_2015_12_01.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Dresses' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'dresses_banner.png' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Pants' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'Pants_Banner_2015_12_01.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Skirts' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'Skirts_Banner_2015_12_01.jpg' | asset_url }});"></div>
+      </div>
+    {% elsif current_tags contains 'Coats-&-Jackets' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'coats_banner.jpg' | asset_url }});"></div>
+      </div>
+  	{% elsif current_tags contains 'Jewelry' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'Jewelry_Banner_2015_12_01.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Sweaters' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'Sweaters_Banner_2015_12_01.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Furniture' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'furniture-banner.jpg' | asset_url }});"></div>
+      </div>
+	{% elsif current_tags contains 'Scarves' %}
+      <div class="collection-hero">
+        <div class="collection-hero__image" style="background-image: url({{ 'scarves_banner.png' | asset_url }});"></div>
+      </div>
+
+    {% endif %}
+
+{% endif %}
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' %}
+<nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+  <a href="/" title="Home">Home</a>
+  {% if template contains 'page' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ page.title }}</span>
+  {% elsif template contains 'product' %}
+    {% if collection.url %}
+      <span aria-hidden="true">&rsaquo;</span>
+      {{ collection.title | link_to: collection.url }}
+    {% endif %}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ product.title }}</span>
+  {% elsif template contains 'collection' and collection.handle %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% if current_tags %}
+      {% capture url %}/collections/{{ collection.handle }} {% endcapture %}
+      {{ collection.title | link_to: url }}
+      <span aria-hidden="true">&rsaquo;</span>
+ 	  <span>
+    	  {% assign words = current_tags.first | split: '-' %}
+    	  {% for word in words %}{{ word | capitalize }} {% endfor %}
+      </span>
+    {% else %}
+      <span>{{ collection.title }}</span>
+    {% endif %}
+  {% elsif template == 'blog' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {% if current_tags %}
+      {{ blog.title | link_to: blog.url }}
+      <span aria-hidden="true">&rsaquo;</span>
+      <span>{{ current_tags | join: " + " }}</span>
+    {% else %}
+    <span>{{ blog.title }}</span>
+    {% endif %}
+  {% elsif template == 'article' %}
+    <span aria-hidden="true">&rsaquo;</span>
+    {{ blog.title | link_to: blog.url }}
+    <span aria-hidden="true">&rsaquo;</span>
+    <span>{{ article.title }}</span>
+  {% else %}
+   <span aria-hidden="true">&rsaquo;</span>
+   <span>{{ page_title }}</span>
+  {% endif %}
+</nav>
+{% endunless %}
+<div class="wrapper">
+
+{% include 'collection-template' %}
+

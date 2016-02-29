@@ -1,0 +1,115 @@
+<!-- /templates/page.liquid -->
+</div>
+<div class="artisan">
+  <div class="collection-hero">
+    <div class="collection-hero__image" style="background-image: url({{ 'Horn-Bone-Header-Banner.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <h3 class="yellow-caps">Haiti Artisan Project</h3>	
+        <h1>{{ collection.title }}</h1>
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              {{ collection.description }}
+              <hr class="hr--clear-xs">
+              <a href="#collection" class="btn">Shop The Collection</a>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+  <hr class="hr--clear-xs">
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item large--one-third text-center">
+        <h2>The Idea</h2>
+        <img src="{{ 'Horn-Bone-Idea-1.jpg' | asset_url }}">
+        <br><br>
+        <p>Horn artistry has a long tradition in Haiti, dating back more than fifty years. The horns used in this craftwork are by-products of cows that are butchered for food locally. This small group is a collective of about 70 artisans who subsist solely on the proceeds from their craft.</p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Craft</h2>
+        <img src="{{ 'Horn-Bone-Craft-1.jpg' | asset_url }}">
+        <br><br>
+        <p>This craft's production commands ecological sustainability. The process of this labor-intensive craft with begins with food byproduct such as horn and bone. The horn is then cut out by hand, fired and left alone or polished, then heated and rolled with a pipe and curled by hand to give the final shape. Bone is tougher so it's retains a more authentic shape.</p>
+      </div>
+      <div class="grid__item large--one-third text-center">
+        <h2>The Impact</h2>
+        <img src="{{ 'Horn-Bone-Impact-1.jpg' | asset_url }}">
+        <br><br>
+        <p>In the devastating earthquake of 2010, these artisans lost their workshops and all of their tools. They continued to work by using whatever materials they could find. We are working to help them restructure and be sustainable for this community which supports about 250 people in the Port-au-Prince area.</p>
+      </div>
+        <hr class="hr--clear-xs">
+      <div class="grid__item text-center">
+        <h2>SHOP THE CURRENT HORN AND BONE COLLECTION AT OUR STORES</h2>
+        <h3><strong>NYC</strong> 1.212.206.3999 | <strong>SAG HARBOR</strong> 1.212.206.3999 | <strong>ASPEN</strong> 1.970.710.2961</h3>
+        <hr class="hr--clear">
+      </div>
+    </div>
+  </div>
+    <div>
+    <img style="width:100%;" src="{{ 'Horn_Product-Grid.jpg' | asset_url }}"/>
+  </div>
+  <div class="wrapper" id="collection">
+  {% include 'artisan-collection-template' %}
+  </div>
+<div class="collection-hero quote">
+    <div class="collection-hero__image" style="background-image: url({{ 'Horn-Bone-Quote-Banner.jpg' | asset_url }});">
+      <header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+                <hr class="hr--clear">
+              <p>“Haiti brings out every emotion you have – despair, compassion, love and hope – as well as the excitement of what’s possible with some heartfelt connection and creative collaboration. You must admire these people.”</p>
+              <hr class="hr--clear-xs">
+             <h4 class="caption"> – DONNA KARAN</h4>
+            </div>
+          </div>
+        </div>
+      </header>  
+    </div>
+  </div>
+	<header class="section-header text-center">
+        <div class="grid">
+          <div class="grid__item large--one-half push--large--one-quarter">
+            <div class="rte--nomargin text-center">
+              <h2>ONE ARTISAN AT A TIME</h2>
+              <h5>The Mission of {{collection.title}}</h5>
+              <p>Urban Zen aims to help develop, market and present the work of Haiti artisans to the western world. As an ambassador to the preservation of Haiti’s artistry and expression, Donna Karan and a community of supporters have been traveling to Haiti at every opportunity, working one-on-one with the artists and manufacturers. “The artistry and skill is breathtaking,” Donna says. “I am so inspired by what I am seeing and the people with whom I’m working with. I couldn’t be more excited.”</p>
+               <hr class="hr--clear-xs">
+
+              <h5>Join our Community: <span class="lowercase">#UZArtisans</span></h5>
+              <ul class="inline-list no-bullets social-icons">
+                  
+                    <li>
+                      <a href="https://www.facebook.com/UrbanZen" title="Urban Zen on Facebook">
+                        <span class="icon icon-facebook" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://twitter.com/urban_zen" title="Urban Zen on Twitter">
+                        <span class="icon icon-twitter" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://www.pinterest.com/urbanzenpins/" title="Urban Zen on Pinterest">
+                        <span class="icon icon-pinterest" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://instagram.com/urbanzen/" title="Urban Zen on Instagram">
+                        <span class="icon icon-instagram" aria-hidden="true"></span>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </header> 
+    </div>

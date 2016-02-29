@@ -1,0 +1,100 @@
+{% comment %}
+  Collection template, used on collection.liquid and collection.image.liquid
+{% endcomment %}
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-third medium--one-half' %}
+{% endunless %}
+{% paginate collection.products by 4 %}
+
+
+{% if settings.collection_products_grid == 'collage' %}
+  <div class="grid grid-collage">
+    {% comment %}
+      Loop through our products in the current collection.
+      See the snippet 'snippets/product-grid-collage.liquid'.
+
+      `is_reverse_row__product`, `three_row_index__product`, `collection_product_count`, and `divisible_by_three__product` are
+      all used by 'snippets/product-grid-collage.liquid'
+    {% endcomment %}
+    {% assign is_reverse_row__product = false %}
+    {% assign three_row_index__product = 0 %}
+    {% assign collection_product_count__product = collection.products_count %}
+    {% assign divisible_by_three__product = collection_product_count__product | modulo:3 %}
+    {% for product in collection.products %}
+    <div class="product collection-img grid__item grid-product {{ grid_item_width }}{% if sold_out %} is-sold-out{% endif %}" id="product-{{ forloop.index | plus:paginate.current_offset }}">
+      {% include 'product-grid-collage' %}
+    </div>
+    {% else %}
+
+      {% if collection.handle == 'all' %}
+
+        {% comment %}
+          Add default products to help with onboarding for collections/all only
+        {% endcomment %}
+        {% unless emptyState %}
+          {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+          {% assign emptyState = true %}
+        {% endunless %}
+
+        {% include 'onboarding-empty-collection' %}
+
+      {% else %}
+
+        {% comment %}
+          If collection exists but is empty, display message
+        {% endcomment %}
+        <div class="grid__item text-center">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+
+      {% endif %}
+
+    {% endfor %}
+
+  </div>
+{% elsif settings.collection_products_grid == 'grid' %}
+
+{% if collection.products.size == 0 %}
+
+{% else %}
+<header class="artisan section-header">
+   <span class="vc_sep_holder vc_sep_holder_l"><span class="vc_sep_line"></span></span>
+   <h4 class="section-header__title text-center"><span>Discover the {{collection.title}} Collection </span></h4>
+   <span class="vc_sep_holder vc_sep_holder_l"><span class="vc_sep_line"></span></span>
+</header>
+{% endif %}
+  <div class="artisan grid-uniform">
+    {% assign grid_item_width = 'medium--one-half large--one-quarter' %}
+    {% for product in collection.products %}
+   
+    <div class="product collection-img grid__item grid-product {{ grid_item_width }}{% if sold_out %} is-sold-out{% endif %}" id="product-{{ forloop.index | plus:paginate.current_offset }}">
+      {% include 'product-grid-item' %}
+    </div>
+    {% else %}
+      {% if collection.handle == 'all' %}
+        {% comment %}
+          Add default products to help with onboarding for collections/all only
+        {% endcomment %}
+        {% unless emptyState %}
+          {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+          {% assign emptyState = true %}
+        {% endunless %}
+
+        {% include 'onboarding-empty-collection' %}
+
+      {% else %}
+
+        {% comment %}
+          If collection exists but is empty, display message
+        {% endcomment %}
+        <div class="grid__item text-center">
+          <p> </p>
+        </div>
+
+      {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endpaginate %}
+

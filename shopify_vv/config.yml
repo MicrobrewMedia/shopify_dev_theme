@@ -1,0 +1,12 @@
+---
+:api_key: bb9fd77711e070cfe75c03f8c078d858
+:password: 0cdea3f454f19633211777a5993ae656
+:store: urban-zen-foundation.myshopify.com
+:whitelist_files:
+- layout/
+- assets/
+- config/
+- snippets/
+- templates/
+- locales/
+:theme_id: 89177153

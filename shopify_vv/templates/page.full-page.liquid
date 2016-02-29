@@ -1,0 +1,60 @@
+</div>
+<div class="fullpage-wrapper" id="fullpage">
+	<div class="section text-center" id="landing" >
+	<div class="hero-caption">
+		<div class="grid__item large--one-half">
+			<h5>Connecting The Dots Between</h5>
+			<h2>Philanthropy + Commerce</h2>
+			<hr class="text-center hr--medium">
+			<p><i>I have spent decades dressing people,<br> now I want to address them</i><br><strong>Donna Karan</strong></p>
+		</div>
+	</div>
+	<div class="bottom-content text-center">
+		<div class="content-center">
+			<div class="grid__item large--one-half">
+				<h2>Philosophy of Living</h2>
+				<a href="">Discover Our Story <i class="icon icon-arrow-down"></i></a>
+			</div>
+			<div class="grid__item large--one-half">
+				<h2>Modern Souls</h2>
+				<a href="">Shop The Collection <i class="icon icon-arrow-down"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="bottom-content-bg">
+	</div>
+</div>
+	<div class="section text-center" id="gif">
+	<div class="hero-caption">
+		<div class="grid__item">
+			<h5>Philosophy of Living</h5>
+			<h2>Calm In The Chaos</h2>
+			<hr class="text-center hr--medium">
+		</div>
+	</div>
+	<div class="video-cover"></div>
+</div>
+<div class="section">
+	<div class="grid__item large--one-half push--large--one-quarter">
+		<h5>Words from our Founder</h5>
+		<h2>Donna's Voice</h2>
+		<div class="grid__item">
+			{% for article in blogs.donnas-voice.articles limit:4 %}
+			{% if forloop.first == true %}
+			<div class="grid__item">
+				<a href="{{ article.url }}" name="{{article.title}}"><img src="{{ article.image.src | img_url: 'grande' }}" alt="{{article.title}}" /></a>
+				<h3><a href="{{ article.url }}" name="{{article.title}}">{{ article.title }}</a></h3>
+				<p>{{article.excerpt}}</p>
+			</div>
+		</div>
+		<div class="grid__item">
+			{% else %}
+			<div class="grid__item large--one-third">
+				<a href="{{ article.url }}" name="{{article.title}}"><img src="{{ article.image.src | img_url: 'medium' }}" alt="{{article.title}}" /></a>
+				<h6><a href="{{ article.url }}">{{ article.title }}</a></h6>
+			</div>
+			{% endif %}{% endfor %}
+		</div>
+	</div>
+</div>
+</div>
